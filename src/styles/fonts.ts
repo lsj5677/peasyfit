@@ -7,7 +7,7 @@ const nanum_gothic = Nanum_Gothic({
   subsets: ["latin"],
 });
 const montserrat = Montserrat({
-  weight: ["200", "400", "600"],
+  weight: ["200", "300", "400", "600", "700", "900"],
   subsets: ["latin"],
 });
 
