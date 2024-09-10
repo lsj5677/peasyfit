@@ -1,10 +1,12 @@
 "use client";
 
 import { montserrat } from "@/styles/fonts";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoCreate, IoCreateOutline } from "react-icons/io5";
 import { RiUser5Line, RiUser5Fill } from "react-icons/ri";
+import Logo from "../ui/Logo";
 
 type TMenuItems = {
   href: string;
@@ -30,14 +32,12 @@ const menuItems = [
 
 export default function Nav() {
   const pathName = usePathname();
+  const { data: session } = useSession();
 
   return (
-    <div className="flex items-center justify-between bg-blue-200 p-4">
+    <div className="bg-subOrange flex items-center justify-between p-4">
       <Link href="/" aria-label="Home">
-        <h1 className={`text-2xl font-extralight ${montserrat.className}`}>
-          <span className="font-semibold">PE</span>asy
-          <span className="font-semibold">Fit</span>
-        </h1>
+        <Logo />
       </Link>
       <nav>
         <ul className="flex items-center gap-5">
@@ -48,6 +48,25 @@ export default function Nav() {
               </Link>
             </li>
           ))}
+          {/* href 에서 조건 처리해주기 (session 없으면 login page로) */}
+          {/* test */}
+          {session ? (
+            <button
+              onClick={() => {
+                signOut();
+              }}
+            >
+              Sign out
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                signIn();
+              }}
+            >
+              Sign in
+            </button>
+          )}
         </ul>
       </nav>
     </div>
