@@ -13,7 +13,7 @@ const config: Config = {
         mainOrange: "#FF8911",
         mainYellow: "#FFFB73",
         subPurple: "#9F70FD",
-        subOrange: "FDBF60",
+        subOrange: "#FDBF60",
         subYellow: "#FFF8C9",
       },
     },
