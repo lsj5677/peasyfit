@@ -1,3 +1,10 @@
+import List from "@/components/record/List";
+
 export default function RecordPage() {
-  return <div>Record</div>;
+  return (
+    <div>
+      Record
+      <List />
+    </div>
+  );
 }

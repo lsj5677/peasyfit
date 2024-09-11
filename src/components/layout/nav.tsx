@@ -1,32 +1,46 @@
-import { montserrat } from "@/styles/fonts";
-import Link from "next/link";
-import { FaRegUserCircle, FaUserCircle } from "react-icons/fa";
-import { IoMdAddCircle, IoMdAddCircleOutline } from "react-icons/io";
+"use client";
 
-const menuItem = [
-  {
-    href: "/",
-    icon: <IoMdAddCircleOutline />,
-    clickedIcon: <IoMdAddCircle />,
-    title: "Record",
-  },
-  {
-    href: "/",
-    icon: <FaRegUserCircle />,
-    clickedIcon: <FaUserCircle />,
-    title: "My page",
-  },
-];
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { IoCreate, IoCreateOutline } from "react-icons/io5";
+import Logo from "../ui/Logo";
+import LinkButton from "../ui/LinkButton";
+import ActionButton from "../ui/ActionButton";
 
 export default function Nav() {
+  const pathName = usePathname();
+  const { data: session } = useSession();
+  const user = session?.user;
+
   return (
-    <div>
+    <div className={`bg-subOrange flex items-center justify-between p-4`}>
       <Link href="/" aria-label="Home">
-        <h1 className={`text-2xl font-extralight ${montserrat.className}`}>
-          <span className="font-semibold">PE</span>asy
-          <span className="font-semibold">Fit</span>
-        </h1>
+        <Logo />
       </Link>
+      <nav>
+        <ul className="flex items-center gap-5">
+          <li className="text-4xl">
+            <Link href={"/record"} aria-label="Record">
+              {pathName === "/record" ? <IoCreate /> : <IoCreateOutline />}
+            </Link>
+          </li>
+          {session && user ? (
+            <li>
+              <Link href={`/user/${user.username}`}>
+                <LinkButton text="My Page" />
+              </Link>
+            </li>
+          ) : (
+            <ActionButton
+              text="Sign In"
+              onClick={() => {
+                signIn();
+              }}
+            />
+          )}
+        </ul>
+      </nav>
     </div>
   );
 }
