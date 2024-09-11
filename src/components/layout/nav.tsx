@@ -13,10 +13,8 @@ export default function Nav() {
   const { data: session } = useSession();
   const user = session?.user;
 
-  console.log(user);
-
   return (
-    <div className="bg-subOrange flex items-center justify-between p-4">
+    <div className={`bg-subOrange flex items-center justify-between p-4`}>
       <Link href="/" aria-label="Home">
         <Logo />
       </Link>
@@ -28,13 +26,11 @@ export default function Nav() {
             </Link>
           </li>
           {session && user ? (
-            <>
-              <li>
-                <Link href={`/user/${user.username}`}>
-                  <LinkButton text="My Page" />
-                </Link>
-              </li>
-            </>
+            <li>
+              <Link href={`/user/${user.username}`}>
+                <LinkButton text="My Page" />
+              </Link>
+            </li>
           ) : (
             <ActionButton
               text="Sign In"
