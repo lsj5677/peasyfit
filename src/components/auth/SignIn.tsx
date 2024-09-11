@@ -7,9 +7,10 @@ import Logo from "../ui/Logo";
 
 type TSignIn = {
   providers: Record<string, ClientSafeProvider>;
+  callbackUrl: string;
 };
 
-export default function SignIn({ providers }: TSignIn) {
+export default function SignIn({ providers, callbackUrl }: TSignIn) {
   return (
     <div className="mx-auto text-center">
       <Logo className="mt-20" />
@@ -18,7 +19,8 @@ export default function SignIn({ providers }: TSignIn) {
         <ActionButton
           key={id}
           text={`Sign in with ${name}`}
-          onClick={() => signIn(id)}
+          onClick={() => signIn(id, { callbackUrl })}
+          wide
         />
       ))}
     </div>
