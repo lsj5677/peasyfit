@@ -1,7 +1,7 @@
 import db from "@/utils/firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
-type TOAuthUser = {
+export type TOAuthUser = {
   id: string;
   email: string;
   username: string;
@@ -32,4 +32,20 @@ export async function addUser(user: TOAuthUser) {
     }
   }
   return userRef;
+}
+
+export async function getUser(id: string) {
+  const userRef = doc(db, `users/${id}`);
+  const snapShot = await getDoc(userRef);
+
+  if (snapShot.exists()) {
+    const userData = snapShot.data();
+
+    if (userData.createdAt) {
+      userData.createdAt = userData.createdAt.toDate();
+    }
+    return userData;
+  } else {
+    console.log("No such document!");
+  }
 }
