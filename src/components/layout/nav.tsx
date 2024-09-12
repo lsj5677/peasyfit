@@ -27,7 +27,7 @@ export default function Nav() {
           </li>
           {session && user ? (
             <li>
-              <Link href={`/user/${user.username}`}>
+              <Link href={`/user/${user.id}`}>
                 <LinkButton text="My Page" />
               </Link>
             </li>

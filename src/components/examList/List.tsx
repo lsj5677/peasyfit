@@ -3,13 +3,20 @@
 import { TList } from "@/app/service/list";
 import { ChangeEvent, FormEvent, useState } from "react";
 import ActionButton from "../ui/ActionButton";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type Props = {
   list: TList[];
 };
 
 export default function List({ list }: Props) {
+  const { data: session } = useSession();
+  const user = session?.user;
   const [newList, setNewList] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
@@ -19,38 +26,43 @@ export default function List({ list }: Props) {
       [name]: checked,
     });
   };
-  const filteredList = Object.entries(newList).filter(([_, value]) => value);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (newList.length === 0) return;
-    alert(filteredList);
 
-    // loading
+    setLoading(true);
 
     // fetch api
     fetch("/api/list/", {
       method: "POST",
       body: JSON.stringify({ newList }),
-    }).then((res) => {
-      if (!res.ok) {
-        // setError(`${res.status} | ${res.statusText}`)]
-        return;
-      }
-      if (res.ok) {
-        alert("Data successfully saved to Firestore");
-        setNewList([]);
-      } else {
-        alert("Error saving data");
-      }
+    }) //
+      .then((res) => {
+        if (res.ok) {
+          alert("성공적으로 저장되었습니다.");
+        } else {
+          setError(`${res.status} | ${res.statusText}`);
+        }
 
-      // router.push('/')
-    });
-    // .catch((err) => )
-    // .finally(() => )
+        router.push(`/user/${user.id}`);
+      })
+      .catch((err) => setError(err.toString()))
+      .finally(() => setLoading(false));
   };
 
   return (
     <div>
+      {loading && (
+        <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
+          <span className="loading loading-infinity loading-lg"></span>
+        </div>
+      )}
+      {error && (
+        <p className="mb-4 w-full bg-red-100 p-4 text-center font-bold text-red-700">
+          {error}
+        </p>
+      )}
       <form onSubmit={handleSubmit}>
         <ul>
           {list.map(({ name, description }) => (

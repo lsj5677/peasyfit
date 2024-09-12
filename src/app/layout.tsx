@@ -3,6 +3,7 @@ import "./globals.css";
 import { open_sans } from "@/styles/fonts";
 import AuthContext from "@/context/AuthContext";
 import Nav from "@/components/layout/nav";
+import SWRConfigContext from "@/context/SWRConfigContext";
 
 export const metadata: Metadata = {
   title: "PEasyFit",
@@ -24,7 +25,9 @@ export default function RootLayout({
           <header className="sticky top-0 z-10">
             <Nav />
           </header>
-          <main className="min-h-[calc(100vh-77px)]">{children}</main>
+          <main className="min-h-[calc(100vh-77px)]">
+            <SWRConfigContext>{children}</SWRConfigContext>
+          </main>
         </AuthContext>
       </body>
     </html>
