@@ -10,7 +10,7 @@ type Props = {
   list: TList[];
 };
 
-export default function List({ list }: Props) {
+export default function ListForm({ list }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
   const [newList, setNewList] = useState<string[]>([]);
