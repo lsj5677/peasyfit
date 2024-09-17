@@ -21,8 +21,8 @@ export default function Nav() {
       <nav>
         <ul className="flex items-center gap-5">
           <li className="text-4xl">
-            <Link href={"/record"} aria-label="Record">
-              {pathName === "/record" ? <IoCreate /> : <IoCreateOutline />}
+            <Link href={"/list"} aria-label="List Form">
+              {pathName === "/list" ? <IoCreate /> : <IoCreateOutline />}
             </Link>
           </li>
           {session && user ? (

@@ -19,7 +19,7 @@ export default async function UserPage({ params: { id } }: TUser) {
   return (
     <div className="p-4">
       <UserProfile user={user} />
-      <UserListGrid user={user} />
+      <UserListGrid />
     </div>
   );
 }

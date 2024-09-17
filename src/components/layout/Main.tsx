@@ -48,7 +48,7 @@ export default function Main() {
         </div>
         <div>
           {session && user ? (
-            <Link href={`/user/${user.username}`}>
+            <Link href={`/user/${user.id}`}>
               <LinkButton
                 text="오늘도 목표를 향해 기록하기"
                 className="text-lg md:min-h-[3.5rem] md:px-8"

@@ -1,6 +1,6 @@
 type Tbutton = {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   wide?: boolean;
   disabled?: boolean;
   className?: string;
@@ -16,7 +16,7 @@ export default function ActionButton({
   return (
     <button
       className={`btn btn-${wide && "wide"} bg-mainPurple h-[2.8rem] min-h-[2.8rem] text-white ${disabled && "opacity-80"} hover:bg-subPurple ${className}`}
-      onClick={() => onClick()}
+      onClick={() => onClick?.()}
     >
       {text}
     </button>

@@ -10,7 +10,7 @@ type Props = {
   list: TList[];
 };
 
-export default function List({ list }: Props) {
+export default function ListForm({ list }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
   const [newList, setNewList] = useState<string[]>([]);
@@ -36,6 +36,9 @@ export default function List({ list }: Props) {
     // fetch api
     fetch("/api/list/", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ newList }),
     }) //
       .then((res) => {
@@ -52,7 +55,7 @@ export default function List({ list }: Props) {
   };
 
   return (
-    <div>
+    <div className="sub-wrap">
       {loading && (
         <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
           <span className="loading loading-infinity loading-lg"></span>
@@ -90,7 +93,6 @@ export default function List({ list }: Props) {
             wide
             text="나만의 리스트 만들기"
             className="text-base"
-            onClick={() => {}}
           />
         </div>
       </form>
