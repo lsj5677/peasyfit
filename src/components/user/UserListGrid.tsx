@@ -1,18 +1,18 @@
 "use client";
 
 import { TUserList } from "@/app/service/list.firestore";
-import { DocumentData } from "@firebase/firestore";
 import useSWR from "swr";
 import UserListCard from "./UserListCard";
 
-export default function UserList({ user }: DocumentData) {
+export default function UserList() {
   const { data: lists, error, isLoading } = useSWR<TUserList[]>(`/api/list`);
-  console.log(`client data`, lists);
 
   return (
     <div>
-      userList
-      <ul className="grid grid-cols-1 content-stretch gap-6 py-6 md:grid-cols-2">
+      <h2 className="my-5 text-center text-lg font-semibold">
+        내 저장목록 {lists?.length ?? 0}개
+      </h2>
+      <ul className="grid gap-3 md:grid-cols-2">
         {lists &&
           lists.map((list, index) => (
             <li
