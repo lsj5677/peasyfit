@@ -1,5 +1,5 @@
+import ListForm from "@/components/form/ListForm";
 import { getAllExamList } from "../service/list";
-import ListForm from "@/components/examList/ListForm";
 
 export default async function ListPage() {
   const list = await getAllExamList();
