@@ -15,10 +15,7 @@ export default function UserList() {
       <ul className="grid gap-3 md:grid-cols-2">
         {lists &&
           lists.map((list, index) => (
-            <li
-              key={index}
-              className="bg-subYellow w-full rounded-md p-5 shadow-xl"
-            >
+            <li key={index}>
               <UserListCard list={list} />
             </li>
           ))}

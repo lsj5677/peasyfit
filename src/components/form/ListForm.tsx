@@ -5,6 +5,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import ActionButton from "../ui/ActionButton";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
+import { TUserList } from "@/app/service/list.firestore";
 
 type Props = {
   list: TList[];
@@ -13,6 +15,10 @@ type Props = {
 export default function ListForm({ list }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
+  const { data, isLoading } = useSWR<TUserList[]>(`/api/list`);
+
+  console.log();
+
   const [newList, setNewList] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -30,6 +36,11 @@ export default function ListForm({ list }: Props) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (newList.length === 0) return;
+    if (data && data.length >= 4) {
+      alert("리스트는 4개까지만 만들 수 있습니다. 마이페이지로 이동합니다.");
+      router.push(`/user/${user.id}`);
+      return;
+    }
 
     setLoading(true);
 
