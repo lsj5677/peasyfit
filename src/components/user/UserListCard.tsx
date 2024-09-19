@@ -4,7 +4,6 @@ import { TUserList } from "@/app/service/list.firestore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { TiDeleteOutline } from "react-icons/ti";
 
 type TUserListCard = {
   list: TUserList;
@@ -29,7 +28,10 @@ export default function UserListCard({ list }: TUserListCard) {
         .then((res) => {
           if (res.ok) {
             alert("삭제되었습니다.");
-            router.push(`/user/${userId}`);
+            console.log(`userId`, userId);
+            if (userId) {
+              router.push(`/user/${userId}`);
+            }
           } else {
             setError(`${res.status} | ${res.statusText}`);
           }
@@ -42,8 +44,8 @@ export default function UserListCard({ list }: TUserListCard) {
   return (
     <div className="h-full w-full py-2">
       {loading && (
-        <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
-          <span className="loading loading-infinity loading-lg"></span>
+        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
+          <span className="loading loading-infinity w-12"></span>
         </div>
       )}
       {error && (
@@ -51,22 +53,31 @@ export default function UserListCard({ list }: TUserListCard) {
           {error}
         </p>
       )}
-      <button
-        onClick={handleDelete}
-        className="ml-auto block text-3xl text-red-600"
-      >
-        <TiDeleteOutline />
-      </button>
-      <Link href={`/record/${listId}`} className="block h-full w-full">
-        {filteredList.map((item, index) => (
-          <div
-            className="border-b border-neutral-200 py-2 text-base"
-            key={`list${index}`}
-          >
-            <span>{item}</span>
+      <div className="card bg-subPurple h-full">
+        <div className="card-body justify-between text-center">
+          <ul>
+            {filteredList.map((item, index) => (
+              <li key={`list${index}`} className="my-1 text-base font-semibold">
+                💪🏻 {item}
+              </li>
+            ))}
+          </ul>
+          <div className="card-actions grid w-full grid-flow-row-dense grid-cols-3 gap-2">
+            <button
+              className="btn btn-ghost bg-mainPurple text-base"
+              onClick={handleDelete}
+            >
+              삭제
+            </button>
+            <Link
+              href={`/record/${listId}`}
+              className="btn bg-subOrange hover:bg-mainOrange col-span-2 flex items-center justify-center text-base text-black"
+            >
+              기록하기
+            </Link>
           </div>
-        ))}
-      </Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,5 @@
-"use client";
-
 import { DocumentData } from "@firebase/firestore";
+
 export default function UserProfile({ user }: DocumentData) {
   return (
     <div>

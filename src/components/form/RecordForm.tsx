@@ -19,7 +19,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
 
   if (!data) return;
 
-  const { list, userId } = data;
+  const { list, userId, id: listId } = data;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
     const { value } = e.target;
@@ -34,14 +34,12 @@ export default function RecordForm({ recordId }: TRecordForm) {
     e.preventDefault();
     if (record === null) return;
 
-    alert(JSON.stringify({ record }));
-
     fetch("/api/record/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ record }),
+      body: JSON.stringify({ record, listId }),
     }) //
       .then((res) => {
         if (res.ok) {
@@ -63,8 +61,8 @@ export default function RecordForm({ recordId }: TRecordForm) {
   return (
     <div className="sub-wrap">
       {isLoading && (
-        <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
-          <span className="loading loading-infinity loading-lg"></span>
+        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
+          <span className="loading loading-infinity w-12"></span>
         </div>
       )}
       {error && (
@@ -73,7 +71,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
         </p>
       )}
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="flex flex-col gap-4">
           {filteredList.map(([key, _], index) => (
             <li key={index}>
               <label className="input input-bordered bg-subYellow flex items-center gap-2">
@@ -92,7 +90,11 @@ export default function RecordForm({ recordId }: TRecordForm) {
             </li>
           ))}
         </ul>
-        <ActionButton wide text="기록 저장하기" className="text-base" />
+        <ActionButton
+          wide
+          text="기록 저장하기"
+          className="mx-auto mt-10 block text-base"
+        />
       </form>
     </div>
   );

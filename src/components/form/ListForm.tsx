@@ -5,6 +5,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import ActionButton from "../ui/ActionButton";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
+import { TUserList } from "@/app/service/list.firestore";
 
 type Props = {
   list: TList[];
@@ -13,9 +15,9 @@ type Props = {
 export default function ListForm({ list }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
+  const { data, isLoading, error } = useSWR<TUserList[]>(`/api/list`);
+
   const [newList, setNewList] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,8 +32,11 @@ export default function ListForm({ list }: Props) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (newList.length === 0) return;
-
-    setLoading(true);
+    if (data && data.length >= 4) {
+      alert("리스트는 4개까지만 만들 수 있습니다. 마이페이지로 이동합니다.");
+      router.push(`/user/${user.id}`);
+      return;
+    }
 
     // fetch api
     fetch("/api/list/", {
@@ -45,20 +50,20 @@ export default function ListForm({ list }: Props) {
         if (res.ok) {
           alert("성공적으로 저장되었습니다.");
         } else {
-          setError(`${res.status} | ${res.statusText}`);
+          alert(`${res.status} | ${res.statusText}`);
         }
 
         router.push(`/user/${user.id}`);
       })
-      .catch((err) => setError(err.toString()))
-      .finally(() => setLoading(false));
+      .catch((err) => error === err.toString())
+      .finally(() => isLoading === false);
   };
 
   return (
     <div className="sub-wrap">
-      {loading && (
-        <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
-          <span className="loading loading-infinity loading-lg"></span>
+      {isLoading && (
+        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
+          <span className="loading loading-infinity w-12"></span>
         </div>
       )}
       {error && (

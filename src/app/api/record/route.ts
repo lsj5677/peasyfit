@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/lib/options";
-import { addRecord, getListById } from "@/app/service/list.firestore";
+import { addRecord, getAllRecord } from "@/app/service/list.firestore";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,11 +13,25 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { record } = body;
+  const { record, listId } = body;
 
   if (record) {
-    return addRecord(id, record).then((data) => NextResponse.json(data));
+    return addRecord(id, listId, record).then((data) =>
+      NextResponse.json(data),
+    );
   } else {
     return new Response("Bad Request", { status: 400 });
   }
+}
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
+  if (!user) {
+    return new Response("Authentication Error", { status: 401 });
+  }
+
+  return getAllRecord(user.id) //
+    .then((data) => NextResponse.json(data));
 }
