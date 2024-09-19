@@ -4,7 +4,6 @@ import { TUserList } from "@/app/service/list.firestore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { TiDeleteOutline } from "react-icons/ti";
 
 type TUserListCard = {
   list: TUserList;
@@ -45,8 +44,8 @@ export default function UserListCard({ list }: TUserListCard) {
   return (
     <div className="h-full w-full py-2">
       {loading && (
-        <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
-          <span className="loading loading-infinity loading-lg"></span>
+        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
+          <span className="loading loading-infinity w-12"></span>
         </div>
       )}
       {error && (

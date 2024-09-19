@@ -1,6 +1,6 @@
 import { getUser } from "@/app/service/user.firestore";
-import UserListGrid from "@/components/user/UserListGrid";
 import UserProfile from "@/components/user/UserProfile";
+import UserTabs from "@/components/user/UserTabs";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -19,7 +19,7 @@ export default async function UserPage({ params: { id } }: TUser) {
   return (
     <div className="p-4">
       <UserProfile user={user} />
-      <UserListGrid />
+      <UserTabs />
     </div>
   );
 }

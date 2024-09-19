@@ -61,8 +61,8 @@ export default function RecordForm({ recordId }: TRecordForm) {
   return (
     <div className="sub-wrap">
       {isLoading && (
-        <div className="absolute inset-0 z-20 bg-sky-500/20 pt-[30%] text-center">
-          <span className="loading loading-infinity loading-lg"></span>
+        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
+          <span className="loading loading-infinity w-12"></span>
         </div>
       )}
       {error && (
