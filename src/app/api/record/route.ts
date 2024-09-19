@@ -13,10 +13,14 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { record } = body;
+  const { record, listId } = body;
+
+  console.log(`body`, listId);
 
   if (record) {
-    return addRecord(id, record).then((data) => NextResponse.json(data));
+    return addRecord(id, listId, record).then((data) =>
+      NextResponse.json(data),
+    );
   } else {
     return new Response("Bad Request", { status: 400 });
   }

@@ -19,7 +19,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
 
   if (!data) return;
 
-  const { list, userId } = data;
+  const { list, userId, id: listId } = data;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
     const { value } = e.target;
@@ -34,14 +34,12 @@ export default function RecordForm({ recordId }: TRecordForm) {
     e.preventDefault();
     if (record === null) return;
 
-    alert(JSON.stringify({ record }));
-
     fetch("/api/record/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ record }),
+      body: JSON.stringify({ record, listId }),
     }) //
       .then((res) => {
         if (res.ok) {
@@ -73,7 +71,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
         </p>
       )}
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="flex flex-col gap-4">
           {filteredList.map(([key, _], index) => (
             <li key={index}>
               <label className="input input-bordered bg-subYellow flex items-center gap-2">
@@ -92,7 +90,11 @@ export default function RecordForm({ recordId }: TRecordForm) {
             </li>
           ))}
         </ul>
-        <ActionButton wide text="기록 저장하기" className="text-base" />
+        <ActionButton
+          wide
+          text="기록 저장하기"
+          className="mx-auto mt-10 block text-base"
+        />
       </form>
     </div>
   );

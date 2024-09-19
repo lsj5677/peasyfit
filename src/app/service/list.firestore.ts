@@ -32,7 +32,6 @@ export async function addList(userId: string, newList: TList) {
     const docRef = await addDoc(listRef, {
       list: { ...newList },
       createdAt,
-      userId,
     });
 
     return docRef;
@@ -72,8 +71,12 @@ export async function deleteListById(userId: string, listId: string) {
   return deleteDoc(listRef);
 }
 
-export async function addRecord(userId: string, newRecord: TRecord) {
-  const recordRef = collection(db, `users/${userId}/record`);
+export async function addRecord(
+  userId: string,
+  listId: string,
+  newRecord: TRecord,
+) {
+  const recordRef = collection(db, `users/${userId}/list/${listId}/record`);
   const createdAt = new Date();
   try {
     const docRef = await addDoc(recordRef, {
