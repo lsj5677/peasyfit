@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/lib/options";
-import { addRecord, getAllRecord } from "@/app/service/list.firestore";
+import { addRecord, getAllRecord } from "@/app/service/record.firestore";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 

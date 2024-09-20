@@ -1,4 +1,3 @@
-import { TRecord } from "@/app/service/list.firestore";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -12,11 +11,17 @@ type TUserRecordCard = {
   listId: string;
 };
 
+const RecordDtatStyle =
+  "my-1 flex items-center justify-between border-b border-neutral-300/30 py-2 text-base font-semibold";
+
+const ButtonStyle =
+  "btn bg-subOrange hover:bg-mainOrange flex w-full items-center justify-center text-base text-black";
+
 export default function UserRecordCard({ record, listId }: TUserRecordCard) {
-  const { userId } = record;
+  const { userId, record: recordData } = record;
   console.log("record", record, "list", listId);
 
-  const filteredList = Object.entries(record).filter(([_, value]) => value);
+  const filteredList = Object.entries(recordData).filter(([_, value]) => value);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -34,29 +39,35 @@ export default function UserRecordCard({ record, listId }: TUserRecordCard) {
       )}
       <div className="card bg-subPurple h-full">
         <div className="card-body justify-between text-center">
-          <ul>
-            {/* {filteredList.map((item, index) => (
-              <li key={`list${index}`} className="my-1 text-base font-semibold">
-                💪🏻 {item}
-              </li>
-            ))} */}
-            {/* {userId === "none" &&
-              filteredList.map((item, index) => (
-                <li
-                  key={`list${index}`}
-                  className="my-1 text-base font-semibold"
-                >
-                  💪🏻 {item}
-                </li>
-              ))} */}
-          </ul>
+          {userId === "none" ? (
+            <div>
+              {filteredList.map(([key, _]) => (
+                <ul className={RecordDtatStyle} key={key}>
+                  <li>{key}</li>
+                  <li>0</li>
+                </ul>
+              ))}
+            </div>
+          ) : (
+            <div>
+              {Object.entries(recordData).map(([key, value]) => (
+                <ul className={RecordDtatStyle} key={key}>
+                  <li>{key}</li>
+                  <li>{value}</li>
+                </ul>
+              ))}
+            </div>
+          )}
           <div className="card-actions">
-            <Link
-              href={`/record/${""}`}
-              className="btn bg-subOrange hover:bg-mainOrange flex w-full items-center justify-center text-base text-black"
-            >
-              기록보기
-            </Link>
+            {userId === "none" ? (
+              <Link href={`/record/${listId}`} className={ButtonStyle}>
+                기록하기
+              </Link>
+            ) : (
+              <Link href={`/user/${userId}/${listId}`} className={ButtonStyle}>
+                기록보기
+              </Link>
+            )}
           </div>
         </div>
       </div>

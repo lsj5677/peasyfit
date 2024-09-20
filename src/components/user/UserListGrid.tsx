@@ -10,7 +10,7 @@ export default function UserListGrid() {
 
   return (
     <div>
-      <div role="alert" className="alert bg-subPurple my-5 text-white">
+      <div role="alert" className="alert bg-mainPurple my-5 text-white">
         <FaCircleExclamation />
         <span>현재 저장목록 {lists?.length ?? 0}개</span>
         <span className="text-sm">리스트는 최대 4개까지 저장 가능합니다. </span>
