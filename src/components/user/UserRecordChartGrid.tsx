@@ -52,11 +52,17 @@ export default function UserRecordChartGrid() {
         ))}
       </ul>
 
+      {isLoading && (
+        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
+          <span className="loading loading-infinity w-12"></span>
+        </div>
+      )}
+      {!records || (records.length === 0 && <p>리스트가 없습니다.</p>)}
       {/* 각 클릭된 것에 따라 컴포넌트 호출 */}
       {tab === "graph" ? (
-        <UserRecordChart records={filteredRecords} />
+        <UserRecordChart filteredRecords={filteredRecords} />
       ) : (
-        <UserRecordTable records={filteredRecords} />
+        <UserRecordTable filteredRecords={filteredRecords} />
       )}
     </div>
   );

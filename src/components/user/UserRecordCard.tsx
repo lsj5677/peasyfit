@@ -19,7 +19,6 @@ const ButtonStyle =
 
 export default function UserRecordCard({ record, listId }: TUserRecordCard) {
   const { userId, record: recordData } = record;
-  console.log("record", record, "list", listId);
 
   const filteredList = Object.entries(recordData).filter(([_, value]) => value);
 
