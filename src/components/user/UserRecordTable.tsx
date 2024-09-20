@@ -1,65 +1,57 @@
-import { TRecord } from "@/app/service/list.firestore";
-import Link from "next/link";
-import { useState } from "react";
-import { TUserRecordAll } from "./UserRecordGrid";
+"use client";
 
-type TUserRecordCard = {
-  record: TUserRecordAll;
+import { useMemo } from "react";
+import { TUserRecordAll } from "./UserRecordGrid";
+import { parseDate } from "@/utils/parseDate";
+
+type TUserRecordChart = {
+  records: TUserRecordAll[];
 };
 
-export default function UserRecordTable({ record }: TUserRecordCard) {
-  const { listId, records, userId } = record;
-  console.log("record", record);
-  // const recordData = records[0].record;
-  // console.log(`record`, records[0].record);
+export default function UserRecordTable({ records }: TUserRecordChart) {
+  const groupedRecordsByKey = useMemo(() => {
+    return records.reduce(
+      (acc, { records: data, listId }) => {
+        data.forEach(({ record, createdAt }) => {
+          // record의 각 key-value 쌍을 순회
+          Object.entries(record).forEach(([key, value]) => {
+            // acc[key]가 없으면 빈 배열로 초기화
+            if (!acc[key]) {
+              acc[key] = [];
+            }
 
-  // const filteredList =
-  //   userId === "none" &&
-  //   Object.entries(recordData).filter(([_, value]) => value);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+            // 동일한 key에 해당하는 value와 createdAt 추가
+            acc[key].push({ value, createdAt: createdAt || "알 수 없는 날짜" });
+          });
+        });
+
+        return acc; // 누적값 반환
+      },
+      {} as Record<string, { value: string | number; createdAt: string }[]>,
+    );
+  }, [records]);
+
   return (
-    <div className="h-full w-full py-2">
-      {loading && (
-        <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">
-          <span className="loading loading-infinity w-12"></span>
-        </div>
-      )}
-      {error && (
-        <p className="mb-4 w-full bg-red-100 p-4 text-center font-bold text-red-700">
-          {error}
-        </p>
-      )}
-      <div className="card bg-subPurple h-full">
-        <div className="card-body justify-between text-center">
-          <ul>
-            {/* {filteredList.map((item, index) => (
-              <li key={`list${index}`} className="my-1 text-base font-semibold">
-                💪🏻 {item}
-              </li>
-            ))} */}
-            {/* {userId === "none" ? (
-              Object.entries(recordData)
-              .filter(([_, value]) => typeof value === 'string')
-              .map(([_, value], index) => (
-                <li key={`list${index}`} className="my-1 text-base font-semibold">
-                  💪🏻 {index}
-                </li>
-              ))
-            ) : (
-              <></>
-            )} */}
-          </ul>
-          <div className="card-actions">
-            <Link
-              href={`/record/${""}`}
-              className="btn bg-subOrange hover:bg-mainOrange col-span-2 flex items-center justify-center text-base text-black"
-            >
-              기록하기
-            </Link>
+    <section>
+      {Object.entries(groupedRecordsByKey).map(([key, values]) => (
+        <div key={key} className="my-10">
+          <h3 className="bg-subPurple rounded-t-md px-4 py-2 font-semibold text-white">
+            {key}
+          </h3>
+          <div>
+            <div className="flex basis-1/5 items-center justify-between">
+              {values.map((item, index) => (
+                <ul key={index} className="flex w-full flex-col text-center">
+                  <li className="box-border w-full border border-neutral-300 bg-neutral-200 py-2">
+                    {parseDate(item.createdAt)}
+                  </li>
+                  <li className="box-border border py-2">{item.value}</li>
+                </ul>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      ))}
+    </section>
   );
 }
