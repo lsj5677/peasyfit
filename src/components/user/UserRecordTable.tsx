@@ -5,12 +5,12 @@ import { TUserRecordAll } from "./UserRecordGrid";
 import { parseDate } from "@/utils/parseDate";
 
 type TUserRecordChart = {
-  records: TUserRecordAll[];
+  filteredRecords: TUserRecordAll[];
 };
 
-export default function UserRecordTable({ records }: TUserRecordChart) {
+export default function UserRecordTable({ filteredRecords }: TUserRecordChart) {
   const groupedRecordsByKey = useMemo(() => {
-    return records.reduce(
+    return filteredRecords.reduce(
       (acc, { records: data, listId }) => {
         data.forEach(({ record, createdAt }) => {
           // record의 각 key-value 쌍을 순회
@@ -29,7 +29,7 @@ export default function UserRecordTable({ records }: TUserRecordChart) {
       },
       {} as Record<string, { value: string | number; createdAt: string }[]>,
     );
-  }, [records]);
+  }, [filteredRecords]);
 
   return (
     <section>

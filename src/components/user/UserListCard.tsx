@@ -28,7 +28,6 @@ export default function UserListCard({ list }: TUserListCard) {
         .then((res) => {
           if (res.ok) {
             alert("삭제되었습니다.");
-            console.log(`userId`, userId);
             if (userId) {
               router.push(`/user/${userId}`);
             }
