@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { open_sans } from "@/styles/fonts";
 import AuthContext from "@/context/AuthContext";
-import Nav from "@/components/layout/Nav";
 import SWRConfigContext from "@/context/SWRConfigContext";
+import Nav from "@/components/layout/Nav";
 
 export const metadata: Metadata = {
   title: "PEasyFit",
