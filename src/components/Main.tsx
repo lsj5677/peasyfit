@@ -1,12 +1,12 @@
 "use client";
 
-import Logo from "../ui/Logo";
-import ActionButton from "../ui/ActionButton";
+import Logo from "./ui/Logo";
+import ActionButton from "./ui/ActionButton";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import LinkButton from "../ui/LinkButton";
-import introImage from "../../../public/images/intro-bg.jpg";
+import LinkButton from "./ui/LinkButton";
+import introImage from "../../public/images/intro-bg.jpg";
 
 export default function Main() {
   const { data: session } = useSession();
@@ -31,7 +31,7 @@ export default function Main() {
           <div className="my-1 flex items-end justify-center gap-2 md:mb-2">
             <Logo size="xl" /> <span>과 함께</span>
           </div>
-          <p className="bg-subYellow inline-block text-3xl">
+          <p className="inline-block bg-subYellow text-3xl">
             <span className="font-bold">기록 관리</span>를 손쉽게!
           </p>
         </div>

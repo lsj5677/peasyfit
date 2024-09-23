@@ -4,9 +4,9 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoCreate, IoCreateOutline } from "react-icons/io5";
-import Logo from "../ui/Logo";
-import LinkButton from "../ui/LinkButton";
-import ActionButton from "../ui/ActionButton";
+import Logo from "./ui/Logo";
+import LinkButton from "./ui/LinkButton";
+import ActionButton from "./ui/ActionButton";
 
 export default function Nav() {
   const pathName = usePathname();
@@ -14,7 +14,7 @@ export default function Nav() {
   const user = session?.user;
 
   return (
-    <div className={`bg-subOrange flex items-center justify-between p-4`}>
+    <div className={`flex items-center justify-between bg-subOrange p-4`}>
       <Link href="/" aria-label="Home">
         <Logo />
       </Link>
