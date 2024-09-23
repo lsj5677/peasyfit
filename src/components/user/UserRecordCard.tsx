@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-import {
-  TEmptyRecord,
-  TExistingRecord,
-  TUserRecordAll,
-} from "./UserRecordGrid";
+import { TEmptyRecord, TExistingRecord } from "./UserRecordGrid";
 
 type TUserRecordCard = {
   record: TEmptyRecord | TExistingRecord;
@@ -22,8 +18,8 @@ export default function UserRecordCard({ record, listId }: TUserRecordCard) {
 
   const filteredList = Object.entries(recordData).filter(([_, value]) => value);
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [loading, _setLoading] = useState<boolean>(false);
+  const [error, _setError] = useState<string>("");
   return (
     <div className="h-full w-full py-2">
       {loading && (

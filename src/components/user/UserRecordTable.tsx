@@ -11,7 +11,7 @@ type TUserRecordChart = {
 export default function UserRecordTable({ filteredRecords }: TUserRecordChart) {
   const groupedRecordsByKey = useMemo(() => {
     return filteredRecords.reduce(
-      (acc, { records: data, listId }) => {
+      (acc, { records: data }) => {
         data.forEach(({ record, createdAt }) => {
           // record의 각 key-value 쌍을 순회
           Object.entries(record).forEach(([key, value]) => {

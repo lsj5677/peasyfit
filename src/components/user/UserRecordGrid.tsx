@@ -3,7 +3,6 @@
 import useSWR from "swr";
 import UserRecordCard from "./UserRecordCard";
 import { FaCircleExclamation } from "react-icons/fa6";
-import { Timestamp } from "@firebase/firestore";
 
 // 데이터가 없는 경우의 타입
 export type TEmptyRecord = {
@@ -27,7 +26,7 @@ export type TUserRecordAll = {
 };
 
 export default function UserRecordGrid() {
-  const { data, error, isLoading } = useSWR<TUserRecordAll[]>(`/api/record`);
+  const { data, isLoading } = useSWR<TUserRecordAll[]>(`/api/record`);
 
   return (
     <section>

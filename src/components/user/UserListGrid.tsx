@@ -6,7 +6,7 @@ import UserListCard from "./UserListCard";
 import { FaCircleExclamation } from "react-icons/fa6";
 
 export default function UserListGrid() {
-  const { data: lists, error, isLoading } = useSWR<TUserList[]>(`/api/list`);
+  const { data: lists, isLoading } = useSWR<TUserList[]>(`/api/list`);
 
   return (
     <div>
