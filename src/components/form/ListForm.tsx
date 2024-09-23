@@ -31,7 +31,7 @@ export default function ListForm({ list }: Props) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (newList.length === 0) return;
+    if (newList.length === 0 || user?.id === undefined) return;
     if (data && data.length >= 4) {
       alert("리스트는 4개까지만 만들 수 있습니다. 마이페이지로 이동합니다.");
       router.push(`/user/${user.id}`);

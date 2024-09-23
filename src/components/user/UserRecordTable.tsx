@@ -20,8 +20,16 @@ export default function UserRecordTable({ filteredRecords }: TUserRecordChart) {
               acc[key] = [];
             }
 
-            // 동일한 key에 해당하는 value와 createdAt 추가
-            acc[key].push({ value, createdAt: createdAt || "알 수 없는 날짜" });
+            // createdAt을 원하는 형식으로 변환
+            const formattedCreatedAt = createdAt
+              ? new Date(createdAt).toLocaleDateString("ko-KR") // 한국어 형식으로 변환
+              : "알 수 없는 날짜";
+
+            // 동일한 key에 대해 value와 formattedCreatedAt 저장
+            acc[key].push({
+              value,
+              createdAt: formattedCreatedAt || "알 수 없는 날짜",
+            });
           });
         });
 
@@ -35,7 +43,7 @@ export default function UserRecordTable({ filteredRecords }: TUserRecordChart) {
     <section>
       {Object.entries(groupedRecordsByKey).map(([key, values]) => (
         <div key={key} className="my-10">
-          <h3 className="bg-subPurple rounded-t-md px-4 py-2 font-semibold text-white">
+          <h3 className="rounded-t-md bg-subPurple px-4 py-2 font-semibold text-white">
             {key}
           </h3>
           <div>
