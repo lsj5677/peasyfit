@@ -39,8 +39,13 @@ export default function UserRecordChart({ filteredRecords }: TUserRecordChart) {
             if (!acc[key]) {
               acc[key] = [];
             }
-            // 동일한 key에 대해 value와 createdAt 저장
-            acc[key].push({ value, createdAt: createdAt || "알 수 없는 날짜" });
+            // createdAt을 원하는 형식으로 변환
+            const formattedCreatedAt = createdAt
+              ? new Date(createdAt).toLocaleDateString("ko-KR")
+              : "알 수 없는 날짜";
+
+            // 동일한 key에 대해 value와 formattedCreatedAt 저장
+            acc[key].push({ value, createdAt: formattedCreatedAt });
           });
         });
         return acc;
