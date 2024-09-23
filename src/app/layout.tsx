@@ -3,7 +3,7 @@ import "./globals.css";
 import { open_sans } from "@/styles/fonts";
 import AuthContext from "@/context/AuthContext";
 import SWRConfigContext from "@/context/SWRConfigContext";
-import Nav from "@/components/layout/Nav";
+import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: "PEasyFit",
