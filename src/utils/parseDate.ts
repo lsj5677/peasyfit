@@ -1,6 +1,5 @@
 export function parseDate(dateString: string) {
   const dateParts = dateString.split(/[., ]+/);
-  const year = dateParts[0];
   const month = dateParts[1].padStart(2, "0"); // 2자리로 맞추기
   const day = dateParts[2].padStart(2, "0"); // 2자리로 맞추기
 

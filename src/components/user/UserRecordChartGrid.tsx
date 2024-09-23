@@ -19,11 +19,7 @@ const tabs = [
 ];
 
 export default function UserRecordChartGrid() {
-  const {
-    data: records,
-    error,
-    isLoading,
-  } = useSWR<TUserRecordAll[]>(`/api/record`);
+  const { data: records, isLoading } = useSWR<TUserRecordAll[]>(`/api/record`);
   const { listId } = useParams();
   const [tab, setTab] = useState<string>(tabs[0].type);
 

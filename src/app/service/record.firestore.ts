@@ -2,22 +2,19 @@ import db from "@/utils/firebase";
 import {
   addDoc,
   collection,
-  deleteDoc,
   doc,
   getDoc,
   getDocs,
   limit,
   orderBy,
   query,
-  QueryDocumentSnapshot,
   Timestamp,
 } from "@firebase/firestore";
 
 export type TRecord = {
   userId?: string;
   id?: string;
-  // record: Record<string, number | boolean | string>;
-  record: any;
+  record: Record<string, number | boolean | string>;
   createdAt?: Date;
   listId?: string;
 };
@@ -141,5 +138,3 @@ export async function getRecordById(
     throw error;
   }
 }
-
-export async function deleteRecordById(userId: string, recordId: string) {}

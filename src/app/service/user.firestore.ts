@@ -1,5 +1,5 @@
 import db from "@/utils/firebase";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export type TOAuthUser = {
   id: string;

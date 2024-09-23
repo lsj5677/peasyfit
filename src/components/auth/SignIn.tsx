@@ -2,7 +2,6 @@
 
 import { ClientSafeProvider, signIn } from "next-auth/react";
 import ActionButton from "../ui/ActionButton";
-import { montserrat } from "@/styles/fonts";
 import Logo from "../ui/Logo";
 
 type TSignIn = {

@@ -13,9 +13,7 @@ type TRecordForm = {
 export default function RecordForm({ recordId }: TRecordForm) {
   const [record, setRecord] = useState<{ [key: string]: string }>({});
   const router = useRouter();
-  const { data, isLoading, error, mutate } = useSWR<TUserList>(
-    `/api/list/${recordId}`,
-  );
+  const { data, isLoading, error } = useSWR<TUserList>(`/api/list/${recordId}`);
 
   if (!data) return;
 

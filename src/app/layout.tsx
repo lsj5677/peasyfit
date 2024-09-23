@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { open_sans } from "@/styles/fonts";
 import AuthContext from "@/context/AuthContext";
-import Nav from "@/components/layout/nav";
+import Nav from "@/components/layout/Nav";
 import SWRConfigContext from "@/context/SWRConfigContext";
 
 export const metadata: Metadata = {
