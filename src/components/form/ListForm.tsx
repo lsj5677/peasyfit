@@ -1,10 +1,10 @@
 "use client";
 
 import { TList } from "@/app/service/list";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import ActionButton from "../ui/ActionButton";
-import { redirect, useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { TUserList } from "@/app/service/list.firestore";
 
