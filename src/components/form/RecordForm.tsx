@@ -42,11 +42,19 @@ export default function RecordForm({ recordId }: TRecordForm) {
       .then((res) => {
         if (res.ok) {
           alert("성공적으로 저장되었습니다.");
-          router.push(`/user/${userId}`);
+          return { userId };
         } else {
           alert("오류가 발생했습니다");
           console.log(`${res.status} | ${res.statusText}`);
           return false;
+        }
+      })
+      .then((userId) => {
+        if (userId) {
+          router.push(`/user/${userId}`);
+        } else {
+          alert("오류가 발생했습니다");
+          router.push("/");
         }
       })
       .catch((err) => console.log(err.toString()))
