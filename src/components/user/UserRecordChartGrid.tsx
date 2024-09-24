@@ -6,6 +6,7 @@ import UserRecordTable from "./UserRecordTable";
 import useSWR from "swr";
 import { TUserRecordAll } from "./UserRecordGrid";
 import { useParams } from "next/navigation";
+import { FaCircleExclamation } from "react-icons/fa6";
 
 const tabs = [
   {
@@ -47,6 +48,11 @@ export default function UserRecordChartGrid() {
           </li>
         ))}
       </ul>
+
+      <div role="alert" className="alert my-5 bg-mainPurple text-white">
+        <FaCircleExclamation />
+        <span>최근 저장한 기록 5개만 보여집니다.</span>
+      </div>
 
       {isLoading && (
         <div className="absolute inset-0 left-1/2 z-20 w-full max-w-screen-md -translate-x-1/2 bg-gray-300/20 pt-[30%] text-center">

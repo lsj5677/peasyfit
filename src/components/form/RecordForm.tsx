@@ -43,6 +43,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
 
       if (res.ok) {
         alert("성공적으로 저장되었습니다.");
+        console.log("userId:", userId);
         router.push(`/user/${userId}`);
       } else {
         alert("오류가 발생했습니다");
