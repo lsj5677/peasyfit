@@ -9,12 +9,12 @@ import { useParams } from "next/navigation";
 
 const tabs = [
   {
-    type: "graph",
-    title: "차트 형식",
+    type: "table",
+    title: "표로 보기",
   },
   {
-    type: "table",
-    title: "표 형식",
+    type: "graph",
+    title: "그래프 비교",
   },
 ];
 
@@ -41,7 +41,7 @@ export default function UserRecordChartGrid() {
             key={type}
             role="tab"
             onClick={() => setTab(type)}
-            className={`flex basis-1/2 cursor-pointer items-center justify-center gap-2 border-black p-4 text-base ${type === tab && "bg-mainPurple rounded-2xl font-bold text-white"}`}
+            className={`flex basis-1/2 cursor-pointer items-center justify-center gap-2 border-black p-4 text-base ${type === tab && "rounded-2xl bg-mainPurple font-bold text-white"}`}
           >
             <button aria-label={title}>{title}</button>
           </li>
@@ -55,10 +55,10 @@ export default function UserRecordChartGrid() {
       )}
       {!records || (records.length === 0 && <p>리스트가 없습니다.</p>)}
       {/* 각 클릭된 것에 따라 컴포넌트 호출 */}
-      {tab === "graph" ? (
-        <UserRecordChart filteredRecords={filteredRecords} />
-      ) : (
+      {tab === "table" ? (
         <UserRecordTable filteredRecords={filteredRecords} />
+      ) : (
+        <UserRecordChart filteredRecords={filteredRecords} />
       )}
     </div>
   );
