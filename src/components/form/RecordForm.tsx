@@ -42,13 +42,12 @@ export default function RecordForm({ recordId }: TRecordForm) {
       .then((res) => {
         if (res.ok) {
           alert("성공적으로 저장되었습니다.");
+          router.push(`/user/${userId}`);
         } else {
           alert("오류가 발생했습니다");
           console.log(`${res.status} | ${res.statusText}`);
           return false;
         }
-
-        router.push(`/user/${userId}`);
       })
       .catch((err) => console.log(err.toString()))
       .finally(() => {});
@@ -72,7 +71,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
         <ul className="flex flex-col gap-4">
           {filteredList.map(([key, _], index) => (
             <li key={index}>
-              <label className="input input-bordered bg-subYellow flex items-center gap-2">
+              <label className="input input-bordered flex items-center gap-2 bg-subYellow">
                 <span className="font-semibold">{key}</span>
                 <input
                   type="number"
