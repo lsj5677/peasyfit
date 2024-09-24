@@ -27,6 +27,7 @@ export async function addList(userId: string, newList: TList) {
     const docRef = await addDoc(listRef, {
       list: { ...newList },
       createdAt,
+      userId,
     });
 
     return docRef;

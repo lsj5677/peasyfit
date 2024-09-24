@@ -15,7 +15,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
   const router = useRouter();
   const { data, isLoading, error } = useSWR<TUserList>(`/api/list/${recordId}`);
 
-  if (!data) return;
+  if (!data || !data.userId) return;
 
   const { list, userId, id: listId } = data;
 
@@ -43,6 +43,7 @@ export default function RecordForm({ recordId }: TRecordForm) {
 
       if (res.ok) {
         alert("성공적으로 저장되었습니다.");
+
         router.push(`/user/${userId}`);
       } else {
         alert("오류가 발생했습니다");
