@@ -1,10 +1,10 @@
 "use client";
 
 import { TList } from "@/app/service/list";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import ActionButton from "../ui/ActionButton";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 import useSWR from "swr";
 import { TUserList } from "@/app/service/list.firestore";
 
@@ -15,10 +15,12 @@ type Props = {
 export default function ListForm({ list }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
-  const { data, isLoading, error } = useSWR<TUserList[]>(`/api/list`);
-
-  const [newList, setNewList] = useState<string[]>([]);
   const router = useRouter();
+
+  const { data, isLoading, error } = useSWR<TUserList[]>(
+    session ? `/api/list` : null, // 세션이 있을 때만 데이터 요청
+  );
+  const [newList, setNewList] = useState<string[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
