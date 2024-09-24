@@ -28,37 +28,29 @@ export default function RecordForm({ recordId }: TRecordForm) {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (record === null) return;
+    if (!record || Object.keys(record).length === 0) return;
 
-    fetch("/api/record/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ record, listId }),
-    }) //
-      .then((res) => {
-        if (res.ok) {
-          alert("성공적으로 저장되었습니다.");
-          return { userId };
-        } else {
-          alert("오류가 발생했습니다");
-          console.log(`${res.status} | ${res.statusText}`);
-          return false;
-        }
-      })
-      .then((userId) => {
-        if (userId) {
-          router.push(`/user/${userId}`);
-        } else {
-          alert("오류가 발생했습니다");
-          router.push("/");
-        }
-      })
-      .catch((err) => console.log(err.toString()))
-      .finally(() => {});
+    try {
+      const res = await fetch("/api/record/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ record, listId }),
+      });
+
+      if (res.ok) {
+        alert("성공적으로 저장되었습니다.");
+        router.push(`/user/${userId}`);
+      } else {
+        alert("오류가 발생했습니다");
+        console.log(`${res.status} | ${res.statusText}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const filteredList = Object.entries(list).filter(([_, value]) => value);
